@@ -1,0 +1,93 @@
+<!--
+  planar_2r.xml : a two-link planar revolute (2R) manipulator.
+
+  Geometry (matches the analytic model used throughout MFoR and RMC):
+    link 1 length  L1 = 1.0 m,   link 2 length  L2 = 0.8 m
+    both joints are hinges about the world z axis, so the arm moves in the
+    horizontal x-y plane and gravity exerts no torque on either joint.
+
+  Frames:
+    body "link1"  : frame {1}, origin on the shoulder axis, x1 along link 1
+    body "link2"  : frame {2}, origin on the elbow axis (1.0 m along x1)
+    site "tool"   : tool frame {T}, at the tip of link 2 (0.8 m along x2)
+
+  With joint angles (q1, q2) the tool position in the base frame is
+    x = L1 cos q1 + L2 cos(q1 + q2),   y = L1 sin q1 + L2 sin(q1 + q2),
+  and z is constant (the height of the base, 0.1 m).
+
+  Actuators: one position servo per joint, which applies the PD law
+    tau = kp (ctrl - q) - kv qdot.
+-->
+<mujoco model="planar_2r">
+  <compiler angle="radian" autolimits="true"/>
+
+  <!-- 1 ms time step; the default semi-implicit Euler integrator. -->
+  <option timestep="0.001" gravity="0 0 -9.81"/>
+
+  <visual>
+    <headlight ambient="0.35 0.35 0.35" diffuse="0.5 0.5 0.5" specular="0.1 0.1 0.1"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global offwidth="800" offheight="600"/>
+  </visual>
+
+  <asset>
+    <texture name="skybox" type="skybox" builtin="gradient"
+             rgb1="0.55 0.70 0.90" rgb2="0.10 0.15 0.25" width="256" height="256"/>
+    <texture name="grid" type="2d" builtin="checker" rgb1="0.82 0.84 0.88"
+             rgb2="0.70 0.73 0.78" width="300" height="300" mark="edge" markrgb="0.55 0.58 0.62"/>
+    <material name="floor" texture="grid" texrepeat="8 8" reflectance="0.05"/>
+    <material name="base"  rgba="0.25 0.27 0.30 1"/>
+    <material name="link1" rgba="0.12 0.47 0.71 1"/>   <!-- blue   -->
+    <material name="link2" rgba="1.00 0.50 0.05 1"/>   <!-- orange -->
+    <material name="joint" rgba="0.15 0.15 0.15 1"/>
+    <material name="tool"  rgba="0.84 0.15 0.16 1"/>   <!-- red    -->
+  </asset>
+
+  <!-- Links never collide with each other or with the floor in this model. -->
+  <default>
+    <geom contype="0" conaffinity="0"/>
+    <joint damping="0.05" armature="0.01"/>
+  </default>
+
+  <worldbody>
+    <light name="sun" pos="0.5 -1.0 3.0" dir="-0.2 0.3 -1" diffuse="0.8 0.8 0.8" castshadow="true"/>
+    <geom name="floor" type="plane" size="3 3 0.05" material="floor" contype="1" conaffinity="1"/>
+
+    <!-- Cameras used for offscreen rendering. -->
+    <camera name="overview" pos="0.5 -1.9 1.9" xyaxes="1 0 0 0 0.621 0.784"/>
+    <camera name="top" pos="0.4 0 4.0" xyaxes="1 0 0 0 1 0"/>
+
+    <!-- Fixed pedestal; the base frame {0} coincides with the world frame
+         translated to the shoulder height z = 0.1 m. -->
+    <geom name="pedestal" type="cylinder" pos="0 0 0.05" size="0.09 0.05" material="base"/>
+    <site name="base" pos="0 0 0.1" size="0.01" rgba="1 1 1 0"/>
+
+    <body name="link1" pos="0 0 0.1">
+      <joint name="q1" type="hinge" axis="0 0 1"/>
+      <geom name="shoulder" type="cylinder" size="0.07 0.035" material="joint"/>
+      <geom name="link1" type="capsule" fromto="0 0 0  1.0 0 0" size="0.04"
+            material="link1" mass="2.0"/>
+
+      <body name="link2" pos="1.0 0 0">
+        <joint name="q2" type="hinge" axis="0 0 1"/>
+        <geom name="elbow" type="cylinder" size="0.06 0.04" material="joint"/>
+        <geom name="link2" type="capsule" fromto="0 0 0  0.8 0 0" size="0.035"
+              material="link2" mass="1.5"/>
+        <!-- Tool frame {T}: its axes are parallel to those of frame {2}. -->
+        <site name="tool" pos="0.8 0 0" size="0.05" material="tool"/>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <!-- Position servos: tau = kp (ctrl - q) - kv qdot. -->
+    <position name="servo_q1" joint="q1" kp="200" kv="30" ctrlrange="-3.1416 3.1416"/>
+    <position name="servo_q2" joint="q2" kp="120" kv="15" ctrlrange="-3.1416 3.1416"/>
+  </actuator>
+
+  <sensor>
+    <jointpos name="q1_pos" joint="q1"/>
+    <jointpos name="q2_pos" joint="q2"/>
+    <framepos name="tool_pos" objtype="site" objname="tool"/>
+  </sensor>
+</mujoco>

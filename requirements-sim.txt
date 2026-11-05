@@ -1,0 +1,33 @@
+# Simulation extras for the Robotics Guide (MFoR and RMC).
+#
+# requirements.txt already installs MuJoCo and mediapy, so a student who has
+# installed it needs this file only for the optional libraries below.
+# Install the core requirements first, then this file:
+#     python -m pip install -r requirements.txt
+#     python -m pip install -r requirements-sim.txt
+# See docs/INSTALLATION.md for platform-specific notes.
+
+# --- Required for the MuJoCo examples (simulations/mujoco and notebooks) ----
+mujoco>=3.1            # physics engine, Python bindings and interactive viewer
+mediapy>=1.2           # displays images and videos inline in Jupyter
+
+# --- Optional libraries -----------------------------------------------------
+# These are NOT needed to run the course material.  They are listed for
+# students who wish to cross-check results against established libraries.
+# Uncomment a line to install it, and read the platform notes first.
+#
+# Peter Corke's Robotics Toolbox for Python (D-H models, fkine, jacob0, ...):
+# roboticstoolbox-python>=1.1
+#
+# Pinocchio rigid-body dynamics (RNEA, ABA, derivatives).  The pip package is
+# named "pin".  pip wheels exist for Linux and macOS only; on Windows use
+# conda:  conda install -c conda-forge pinocchio
+# pin>=3.0
+#
+# PyBullet.  Its most recent release ships pre-built wheels only for Linux
+# x86-64 and Python <= 3.11; elsewhere pip compiles it from source, which
+# needs a C++ compiler (on Windows: "Microsoft C++ Build Tools").
+# pybullet>=3.2
+#
+# Modern Robotics code library (Lynch and Park), product-of-exponentials:
+# modern_robotics>=1.1

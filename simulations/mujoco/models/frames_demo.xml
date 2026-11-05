@@ -1,0 +1,72 @@
+<!--
+  frames_demo.xml : a free-floating rigid body that displays its own
+  coordinate frame as three coloured arrows (x red, y green, z blue).
+
+  The body "frame" carries a free joint, so its configuration is
+    qpos = [px, py, pz, qw, qx, qy, qz],
+  i.e. a position vector followed by a unit quaternion (scalar first).
+  Setting qpos and calling mj_forward places the frame; data.xmat and
+  data.xquat then report its orientation relative to the world frame.
+
+  A smaller, fixed copy of the axes at the origin represents the world
+  frame {0}.  Gravity is switched off so that the body stays where it is
+  put, even if the simulation is stepped.
+-->
+<mujoco model="frames_demo">
+  <compiler angle="radian"/>
+  <option timestep="0.002" gravity="0 0 0"/>
+
+  <visual>
+    <headlight ambient="0.4 0.4 0.4" diffuse="0.5 0.5 0.5" specular="0.1 0.1 0.1"/>
+    <global offwidth="800" offheight="600"/>
+  </visual>
+
+  <asset>
+    <texture name="skybox" type="skybox" builtin="gradient"
+             rgb1="0.55 0.70 0.90" rgb2="0.10 0.15 0.25" width="256" height="256"/>
+    <texture name="grid" type="2d" builtin="checker" rgb1="0.82 0.84 0.88"
+             rgb2="0.70 0.73 0.78" width="300" height="300" mark="edge" markrgb="0.55 0.58 0.62"/>
+    <material name="floor" texture="grid" texrepeat="6 6" reflectance="0.05"/>
+    <material name="x_axis" rgba="0.85 0.10 0.10 1"/>
+    <material name="y_axis" rgba="0.10 0.70 0.20 1"/>
+    <material name="z_axis" rgba="0.10 0.30 0.90 1"/>
+    <material name="x_world" rgba="0.85 0.10 0.10 0.45"/>
+    <material name="y_world" rgba="0.10 0.70 0.20 0.45"/>
+    <material name="z_world" rgba="0.10 0.30 0.90 0.45"/>
+    <material name="core" rgba="0.92 0.92 0.92 1"/>
+  </asset>
+
+  <default>
+    <geom contype="0" conaffinity="0"/>
+    <default class="shaft">
+      <geom type="cylinder" size="0.012"/>
+    </default>
+    <default class="head">
+      <geom type="sphere" size="0.03"/>
+    </default>
+  </default>
+
+  <worldbody>
+    <light name="sun" pos="0.5 -0.5 3" dir="-0.1 0.1 -1" diffuse="0.8 0.8 0.8"/>
+    <geom name="floor" type="plane" size="2 2 0.05" material="floor"/>
+    <camera name="iso" pos="1.25 -1.25 1.35" xyaxes="0.707 0.707 0 -0.306 0.306 0.901"/>
+
+    <!-- World frame {0}: translucent axes of length 0.3 m at the origin. -->
+    <geom name="world_x" class="shaft" fromto="0 0 0.002  0.3 0 0.002" material="x_world"/>
+    <geom name="world_y" class="shaft" fromto="0 0 0.002  0 0.3 0.002" material="y_world"/>
+    <geom name="world_z" class="shaft" fromto="0 0 0.002  0 0 0.3"     material="z_world"/>
+
+    <!-- Moving frame {B}: axes of length 0.4 m with spherical arrow heads. -->
+    <body name="frame" pos="0 0 0.6">
+      <freejoint name="frame_free"/>
+      <geom name="core"   type="box" size="0.04 0.04 0.04" material="core" mass="1"/>
+      <geom name="x_axis" class="shaft" fromto="0 0 0  0.4 0 0" material="x_axis" mass="0.05"/>
+      <geom name="y_axis" class="shaft" fromto="0 0 0  0 0.4 0" material="y_axis" mass="0.05"/>
+      <geom name="z_axis" class="shaft" fromto="0 0 0  0 0 0.4" material="z_axis" mass="0.05"/>
+      <geom name="x_head" class="head" pos="0.4 0 0" material="x_axis" mass="0.01"/>
+      <geom name="y_head" class="head" pos="0 0.4 0" material="y_axis" mass="0.01"/>
+      <geom name="z_head" class="head" pos="0 0 0.4" material="z_axis" mass="0.01"/>
+      <site name="origin" size="0.01" rgba="0 0 0 1"/>
+    </body>
+  </worldbody>
+</mujoco>

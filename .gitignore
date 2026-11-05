@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# MuJoCo / local caches
+MUJOCO_LOG.TXT
+.cache/
+
+# OS / editor
+.DS_Store
+.vscode/
