@@ -55,9 +55,39 @@ parallel mechanisms (with MFoR 9), motion planning and collision avoidance (MFoR
 **Paused for lack of build capacity:** RMC 8 (sensing, implementation, visual servoing) and RMC 9 (underactuated and mobile systems).
 Their notebook plans below remain the intended content.
 
-**Prof. Nandi's lectures.** The lecture titles in [docs/VIDEO_INDEX.md](docs/VIDEO_INDEX.md) (lectures 1–25 of playlist 1) are covered by
-MFoR 1–4. The titles of lectures 4–5 and 26–29 of playlist 1, and of playlists 2 and 3, could not be read (YouTube is blocked in the
-build environment), so a **topic-by-topic audit against his playlists is still to be done** once the titles are available.
+**Reference for completeness.** On the repository owner's instruction, Craig's chapters are the reference for what must be covered; the
+topics of Prof. Nandi's second and third playlists correspond to them (RMC ↔ Craig Chapters 9–11, case studies ↔ the worked robots of Chapters 3
+and 4 plus Baxter and NAO). The lecture titles of lectures 1–25 of playlist 1 (see [docs/VIDEO_INDEX.md](docs/VIDEO_INDEX.md)) are covered by MFoR 1–4.
+
+### Craig Chapters 9–11, section by section (the RMC reference list)
+
+Section titles are those of Craig's 3rd edition as recorded in the research notes; check them against your copy.
+
+| Craig section | RMC notebook that must cover it | Status |
+|:--|:--|:--|
+| 9.2 Feedback and closed-loop control | RMC 1.1–1.2 | planned |
+| 9.3 Second-order linear systems | RMC 1.2 | planned |
+| 9.4 Control of second-order systems | RMC 1.4, 2.2 | planned |
+| 9.5 Control-law partitioning | RMC 2.3 | planned |
+| 9.6 Trajectory-following control | RMC 2.3 | planned |
+| 9.7 Disturbance rejection | RMC 2.2 | planned |
+| 9.8 Continuous vs discrete-time control | RMC 1.4, 2.4 | planned |
+| 9.9 Modelling and control of a single joint | RMC 2.1 ✅, 2.2 | in progress |
+| 9.10 Architecture of an industrial-robot controller | RMC 2.4 (and 8.2) | planned |
+| 10.2 Nonlinear and time-varying systems | RMC 3.1 ✅ | in progress |
+| 10.3 Multi-input, multi-output control systems | RMC 3.3 | planned |
+| 10.4 The control problem for manipulators | RMC 3.2–3.3 | planned |
+| 10.5 Practical considerations | RMC 3.4 | planned |
+| 10.6 Current industrial-robot control systems | RMC 2.4 | planned |
+| 10.7 Lyapunov stability analysis | RMC 3.1 ✅, 3.2 | in progress |
+| 10.8 Cartesian-based control systems | RMC 4.3 | planned |
+| 10.9 Adaptive control | RMC 4.2 | planned |
+| 11.2 Industrial robots in assembly | RMC 5.1 | planned |
+| 11.3 Framework for partially constrained tasks (natural and artificial constraints) | RMC 5.1 | planned |
+| 11.4 The hybrid position/force control problem | RMC 5.3 | planned |
+| 11.5 Force control of a mass–spring system | RMC 5.1, 5.3 | planned |
+| 11.6 The hybrid position/force control scheme | RMC 5.3 | planned |
+| 11.7 Current industrial-robot control schemes | RMC 5.2–5.3 | planned |
 
 ---
 

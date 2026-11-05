@@ -19,9 +19,7 @@ unfinished notebook sources are in `tools/sources/` (they have no built notebook
 * **No AI co-author lines in commits** (no `Co-Authored-By`, no session lines). Credit to Claude appears **only in the README**.
 * **One chapter at a time, one builder per chapter; no new parallel sub-agents** (to save usage).
 * Use **real robot models** (MuJoCo Menagerie; Baxter from robosuite) wherever they teach better; check hand results against MuJoCo.
-* Cover Craig's chapters (MFoR 1–7 + planned 9–11; control chapters 9–11 live in RMC) and **everything in Prof. G. C. Nandi's playlists**
-  (the playlist contents are not yet audited — YouTube was blocked in the build environment; paste the video titles to do it).
-* Add complete sections on **Baxter** and **NAO** (MFoR Chapter 8).
+* Cover **Craig's chapters** (MFoR 1–7 + planned 9–11; Craig Ch. 9–11 are taught in RMC); Craig is the completeness reference in place of Prof. Nandi's playlists.
 
 ## Where things are
 Everything is on the `main` branch: the library `rgkit`, tools, docs, maths primer, README, CI, the ten chapters started (see `STATUS.md`) and their

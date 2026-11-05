@@ -30,8 +30,7 @@ Most failures in the checker are only **dangling links** to notebooks that were 
 fix by writing the notebook or replacing the link with "(planned)".
 
 ## Known issues
-* The playlists of Prof. G. C. Nandi (3 playlists) have **not been audited** (YouTube is blocked in the build environment).
-  Titles of lectures 4–5 and 26–29 of playlist 1 and all of playlists 2 and 3 are unknown.
+* Completeness is checked against **Craig's chapters** (owner's instruction), not against Prof. Nandi's playlists; see the Craig 9–11 table in `SYLLABUS.md`.
 * The 2.5 figures of the finished Chapter 2 were not visually inspected.
 * IIIT-A syllabus text comes from search snippets, not the official PDFs.
 * NAO has no MuJoCo model; build a skeleton from the published dimensions (see `CHAPTER_BRIEFS.md`).
