@@ -1,0 +1,386 @@
+[
+ {
+  "source": "Nandi",
+  "title": "Lecture 1 — Introduction",
+  "url": "https://www.youtube.com/watch?v=7_EEBOgdGM8",
+  "page": 11
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 2 — A simple two-link manipulator",
+  "url": "https://www.youtube.com/watch?v=4eAlCjFMq2Q",
+  "page": 11
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 3 — Simple concepts of forward and inverse kinematics",
+  "url": "https://www.youtube.com/watch?v=2ww-3c08BIs",
+  "page": 11
+ },
+ {
+  "source": "MR",
+  "title": "2.1 DOF of a rigid body",
+  "url": "https://www.youtube.com/watch?v=z29hYlagOYM",
+  "page": 11
+ },
+ {
+  "source": "MR",
+  "title": "2.2 DOF of a robot (Grübler)",
+  "url": "https://www.youtube.com/watch?v=zI64DyaRUvQ",
+  "page": 11
+ },
+ {
+  "source": "MR",
+  "title": "2.3.1 C-space topology",
+  "url": "https://www.youtube.com/watch?v=FyLNR3edOds",
+  "page": 11
+ },
+ {
+  "source": "MR",
+  "title": "2.3.2 C-space representation",
+  "url": "https://www.youtube.com/watch?v=PPgJPjCUIXU",
+  "page": 11
+ },
+ {
+  "source": "MR",
+  "title": "2.4 Configuration and velocity constraints",
+  "url": "https://www.youtube.com/watch?v=A14ArEZ47LE",
+  "page": 11
+ },
+ {
+  "source": "MR",
+  "title": "2.5 Task space and workspace",
+  "url": "https://www.youtube.com/watch?v=hTuW51CpUg4",
+  "page": 11
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 6 — Basics of spatial transformation",
+  "url": "https://www.youtube.com/watch?v=WHIlBbJtdxk",
+  "page": 17
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 7 — Basics of rotational transformation",
+  "url": "https://www.youtube.com/watch?v=588iwEM-Dto",
+  "page": 17
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 15 — Spatial transformation explained in a simple way",
+  "url": "https://www.youtube.com/watch?v=CJdCTyDpX4U",
+  "page": 17
+ },
+ {
+  "source": "TE",
+  "title": "Spatial descriptions and transformation matrices",
+  "url": "https://www.youtube.com/watch?v=4Y1_y9DI_Hw",
+  "page": 17
+ },
+ {
+  "source": "TE",
+  "title": "Spatial descriptions — worked example",
+  "url": "https://www.youtube.com/watch?v=r244ADkuexk",
+  "page": 17
+ },
+ {
+  "source": "MR",
+  "title": "Ch. 3 introduction",
+  "url": "https://www.youtube.com/watch?v=29LhXWjn7Pc",
+  "page": 17
+ },
+ {
+  "source": "MR",
+  "title": "3.2.1 Rotation matrices (part 1)",
+  "url": "https://www.youtube.com/watch?v=OZucG1DY_sY",
+  "page": 17
+ },
+ {
+  "source": "MR",
+  "title": "3.2.1 Rotation matrices (part 2)",
+  "url": "https://www.youtube.com/watch?v=6KIPusOv5fA",
+  "page": 17
+ },
+ {
+  "source": "MR",
+  "title": "3.2.2 Angular velocities",
+  "url": "https://www.youtube.com/watch?v=zJJldJYMxVU",
+  "page": 17
+ },
+ {
+  "source": "TE",
+  "title": "Compound transformation matrices and inverse transformation matrices",
+  "url": "https://www.youtube.com/watch?v=sm7d1A2npWA",
+  "page": 22
+ },
+ {
+  "source": "MR",
+  "title": "3.3.1 Homogeneous transformation matrices",
+  "url": "https://www.youtube.com/watch?v=vlb3P7arbkU",
+  "page": 22
+ },
+ {
+  "source": "MR",
+  "title": "3.3.2 Twists (part 1)",
+  "url": "https://www.youtube.com/watch?v=mvGZtO_ruj0",
+  "page": 22
+ },
+ {
+  "source": "MR",
+  "title": "3.3.2 Twists (part 2)",
+  "url": "https://www.youtube.com/watch?v=VTv0qmLNvjg",
+  "page": 22
+ },
+ {
+  "source": "MR",
+  "title": "3.3.3 Exponential coordinates of rigid-body motion",
+  "url": "https://www.youtube.com/watch?v=1jYMvm1U2D0",
+  "page": 22
+ },
+ {
+  "source": "MR",
+  "title": "3.4 Wrenches",
+  "url": "https://www.youtube.com/watch?v=0wsYPJPGtKE",
+  "page": 22
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 8 — How to represent orientation?",
+  "url": "https://www.youtube.com/watch?v=HmveMBMFTtU",
+  "page": 27
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 9 — Orientation description of a rigid body",
+  "url": "https://www.youtube.com/watch?v=MCN5ST40cy8",
+  "page": 27
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 10 — Rotation matrix when the body is rotated about a given axis",
+  "url": "https://www.youtube.com/watch?v=eItbJ-WYzAE",
+  "page": 27
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 11 — Gimbal lock explained in a practical manner",
+  "url": "https://www.youtube.com/watch?v=m50tWpx-t0I",
+  "page": 27
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 12 — Typical solution of Euler angles, type II",
+  "url": "https://www.youtube.com/watch?v=wjaFmQKnLOA",
+  "page": 27
+ },
+ {
+  "source": "TE",
+  "title": "Fixed and Euler angle representation",
+  "url": "https://www.youtube.com/watch?v=uG0P9RX65Ek",
+  "page": 27
+ },
+ {
+  "source": "TE",
+  "title": "Euler angles — worked example",
+  "url": "https://www.youtube.com/watch?v=8FD1jgb3Df4",
+  "page": 27
+ },
+ {
+  "source": "MR",
+  "title": "3.2.3 Exponential coordinates of rotation (part 1)",
+  "url": "https://www.youtube.com/watch?v=v_KBHaG0mas",
+  "page": 27
+ },
+ {
+  "source": "MR",
+  "title": "3.2.3 Exponential coordinates of rotation (part 2)",
+  "url": "https://www.youtube.com/watch?v=WHn9xJl43nY",
+  "page": 27
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 13 — Orientation description using quaternion: why is it more useful?",
+  "url": "https://www.youtube.com/watch?v=UxC8Ho5e6_Y",
+  "page": 31
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 14 — Use of quaternion for rotation",
+  "url": "https://www.youtube.com/watch?v=uGzl-TW68Pw",
+  "page": 31
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 16 — Modelling of manipulating robots using D-H principle I",
+  "url": "https://www.youtube.com/watch?v=BHXEw_yf5BY",
+  "page": 36
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 17 — Understanding manipulator modelling using D-H principle II",
+  "url": "https://www.youtube.com/watch?v=6C7Kcrp6rlg",
+  "page": 36
+ },
+ {
+  "source": "TE",
+  "title": "Frame assignment for robotic manipulators (Direct Kinematics I)",
+  "url": "https://www.youtube.com/watch?v=fNIyNF87q9I",
+  "page": 36
+ },
+ {
+  "source": "TE",
+  "title": "D-H tables (Direct Kinematics II)",
+  "url": "https://www.youtube.com/watch?v=DPO9Se6ZqN0",
+  "page": 36
+ },
+ {
+  "source": "TE",
+  "title": "Creating transformation matrices from D-H tables (III)",
+  "url": "https://www.youtube.com/watch?v=yjLVBbK_rOU",
+  "page": 36
+ },
+ {
+  "source": "MR",
+  "title": "4.1.1 PoE formula in the space frame",
+  "url": "https://www.youtube.com/watch?v=hE_Duih_7JE",
+  "page": 36
+ },
+ {
+  "source": "MR",
+  "title": "4.1.2 PoE in the end-effector frame",
+  "url": "https://www.youtube.com/watch?v=27jUrkFdyks",
+  "page": 36
+ },
+ {
+  "source": "MR",
+  "title": "Ch. 4 forward kinematics example",
+  "url": "https://www.youtube.com/watch?v=cKHsil0V6Qk",
+  "page": 36
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 19 — Modelling more robot structures using D-H principle IV",
+  "url": "https://www.youtube.com/watch?v=9LM-eJ5IhCw",
+  "page": 41
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 20 — Anatomy of PUMA-560",
+  "url": "https://www.youtube.com/watch?v=VAmoBHrWgto",
+  "page": 41
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 21 — Anatomy of PUMA-560 (contd.)",
+  "url": "https://www.youtube.com/watch?v=TZkmijgMXvg",
+  "page": 41
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 23 — Understanding robot models through question answering",
+  "url": "https://www.youtube.com/watch?v=4jQXZqHpc3Y",
+  "page": 41
+ },
+ {
+  "source": "TE",
+  "title": "Worked example: frame assignment, D-H tables, transformation matrices (Direct Kinematics IV)",
+  "url": "https://www.youtube.com/watch?v=KdKAJ6kLY6U",
+  "page": 41
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 18 — Solving inverse kinematics, D-H principle III",
+  "url": "https://www.youtube.com/watch?v=i1aE3ArctfA",
+  "page": 48
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 22 — Inverse pose kinematics for PUMA-560",
+  "url": "https://www.youtube.com/watch?v=q-voL4gpEb8",
+  "page": 48
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 24 — Concepts through question answering II",
+  "url": "https://www.youtube.com/watch?v=fjxZ74DHIwY",
+  "page": 48
+ },
+ {
+  "source": "Nandi",
+  "title": "Lecture 25 — Concluding lecture on unit one",
+  "url": "https://www.youtube.com/watch?v=Ddq_0NsGSrE",
+  "page": 48
+ },
+ {
+  "source": "MR",
+  "title": "Ch. 6 Inverse kinematics of open chains",
+  "url": "https://www.youtube.com/watch?v=nin2TbMuhR0",
+  "page": 48
+ },
+ {
+  "source": "MR",
+  "title": "6.2 Numerical inverse kinematics (part 1)",
+  "url": "https://www.youtube.com/watch?v=VhUA0jf7tI8",
+  "page": 55
+ },
+ {
+  "source": "MR",
+  "title": "6.2 Numerical inverse kinematics (part 2)",
+  "url": "https://www.youtube.com/watch?v=24cXvgQl-nk",
+  "page": 55
+ },
+ {
+  "source": "MR",
+  "title": "5.3 Singularities",
+  "url": "https://www.youtube.com/watch?v=vjJgTvnQpBs",
+  "page": 55
+ },
+ {
+  "source": "MR",
+  "title": "Ch. 5 Velocity kinematics and statics",
+  "url": "https://www.youtube.com/watch?v=6tj8QLF69Ok",
+  "page": 55
+ },
+ {
+  "source": "MR",
+  "title": "5.1.1 Space Jacobian",
+  "url": "https://www.youtube.com/watch?v=KbI8HN3imtQ",
+  "page": 55
+ },
+ {
+  "source": "MR",
+  "title": "5.1.2 Body Jacobian",
+  "url": "https://www.youtube.com/watch?v=69HeL2XvL9Y",
+  "page": 55
+ },
+ {
+  "source": "MR",
+  "title": "5.2 Statics of open chains",
+  "url": "https://www.youtube.com/watch?v=eBti6XIoR5U",
+  "page": 55
+ },
+ {
+  "source": "MR",
+  "title": "5.4 Manipulability",
+  "url": "https://www.youtube.com/watch?v=8VSrYDi_cs0",
+  "page": 55
+ },
+ {
+  "source": "TE",
+  "title": "Jacobian matrix and singularities (part 1)",
+  "url": "https://www.youtube.com/watch?v=h2YM0CDzDl4",
+  "page": 55
+ },
+ {
+  "source": "TE",
+  "title": "Jacobian by partial differentiation (part 2)",
+  "url": "https://www.youtube.com/watch?v=YS3kt_eqOPY",
+  "page": 55
+ },
+ {
+  "source": "TE",
+  "title": "Jacobian: torques and forces on joints (part 4)",
+  "url": "https://www.youtube.com/watch?v=DsWaju7vbk4",
+  "page": 55
+ }
+]

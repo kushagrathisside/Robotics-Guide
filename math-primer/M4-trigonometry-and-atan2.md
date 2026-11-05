@@ -141,16 +141,15 @@ $$
 | $c^2 = a^2 + b^2$ | one (double root) | boundary of the workspace |
 | $c^2 > a^2 + b^2$ | none | target out of reach |
 
-**Two special cases.**
+**Special case 1: $c = 0$.** The equation $a\cos\theta + b\sin\theta = 0$ gives $\tan\theta = -a/b$, and its two solutions, $\pi$ apart, are $\theta = \operatorname{atan2}(-a, b)$ and $\theta = \operatorname{atan2}(a, -b)$.
 
-* $c = 0$, i.e. $a\cos\theta + b\sin\theta = 0$: then $\tan\theta = -a/b$, and the two solutions, $\pi$ apart, are $\theta = \operatorname{atan2}(-a, b)$ and $\theta = \operatorname{atan2}(a, -b)$.
-* A *pair* of equations $a\cos\theta - b\sin\theta = c$ and $a\sin\theta + b\cos\theta = d$ (which arises when a known vector is rotated by an unknown angle) has the unique solution
+**Special case 2: a pair of equations.** The pair $a\cos\theta - b\sin\theta = c$ and $a\sin\theta + b\cos\theta = d$, which arises when a known vector is rotated by an unknown angle, has the unique solution
 
 $$
-\theta = \operatorname{atan2}(ad - bc,\ ac + bd),
+\theta = \operatorname{atan2}(ad - bc,\ ac + bd).
 $$
 
-  since, with $a = r\cos\varphi$ and $b = r\sin\varphi$, the equations say $r\cos(\theta + \varphi) = c$ and $r\sin(\theta + \varphi) = d$, and expanding $\sin\theta = \sin((\theta + \varphi) - \varphi)$ and $\cos\theta = \cos((\theta + \varphi) - \varphi)$ gives $r^2\sin\theta = ad - bc$ and $r^2\cos\theta = ac + bd$.
+To see this, write $a = r\cos\varphi$ and $b = r\sin\varphi$; the equations say $r\cos(\theta + \varphi) = c$ and $r\sin(\theta + \varphi) = d$, and expanding $\sin\theta = \sin((\theta + \varphi) - \varphi)$ and $\cos\theta = \cos((\theta + \varphi) - \varphi)$ gives $r^2\sin\theta = ad - bc$ and $r^2\cos\theta = ac + bd$.
 
 ## 6. The tangent half-angle substitution
 
@@ -304,7 +303,7 @@ $r = \sqrt{4 + 1} = \sqrt5 \approx 2.236 < 3$, so $|c| > r$: the left-hand side 
 
 <details><summary>Answer</summary>
 
-$ad - bc = 2.17488 + 1.03906 = 3.21394$ and $ac + bd = -0.51953 + 4.34976 = 3.83022$, so $\theta = \operatorname{atan2}(3.21394, 3.83022) = 40.00^\circ$. (Both numbers equal $r^2 = 5$ times $\sin40^\circ$ and $\cos40^\circ$ respectively.)
+$ad - bc = 2.17488 + 1.03906 = 3.21394$ and $ac + bd = -0.51953 + 4.34976 = 3.83023$, so $\theta = \operatorname{atan2}(3.21394, 3.83023) = 40.00^\circ$. (Both numbers equal $r^2 = 5$ times $\sin40^\circ$ and $\cos40^\circ$ respectively.)
 
 </details>
 

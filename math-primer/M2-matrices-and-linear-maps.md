@@ -68,7 +68,7 @@ The product is defined only when the inner dimensions agree, and it is **associa
 In robotics, products appear as **chains of transforms**:
 
 $$
-{}^{0}_{N}T = {}^{0}_{1}T\;{}^{1}_{2}T\;\cdots\;{}^{N-1}_{\phantom{N}N}T .
+{}^{0}_{N}T = {}^{0}_{1}T\;{}^{1}_{2}T\;\cdots\;{}^{N-1}_{N}T .
 $$
 
 The subscripts and superscripts "cancel" like a chain, which is a useful check on whether a product is written in the correct order (Craig Ch. 2).
