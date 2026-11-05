@@ -29,6 +29,36 @@ usable by a student at **any** college, and it is not organised around examinati
 * Every notebook runs in Google Colab (badge at the top) or locally ([installation guide](docs/INSTALLATION.md)).
 * Simulations use [MuJoCo](docs/MUJOCO.md) and real robot models (UR5e, Franka Panda, KUKA iiwa, Dynamixel 2R, …).
 
+## 3. Coverage of Craig's chapters
+
+Craig's *Introduction to Robotics* (3rd ed.) has thirteen chapters. This table shows where each is taught here.
+
+| Craig chapter | Where in this repository | Status |
+|:--|:--|:--|
+| 1 Introduction | MFoR 1 | in progress |
+| 2 Spatial descriptions and transformations | MFoR 2 | in progress (2.1–2.3 done) |
+| 3 Manipulator kinematics | MFoR 3 | in progress |
+| 4 Inverse manipulator kinematics | MFoR 4 | in progress |
+| 5 Jacobians: velocities and static forces | MFoR 5 | in progress |
+| 6 Manipulator dynamics | MFoR 6 | in progress |
+| 7 Trajectory generation (incl. run-time generation) | MFoR 7 | in progress |
+| 8 Manipulator-mechanism design | **MFoR 9 (planned)** | not started |
+| 9 Linear control of manipulators | RMC 1 and RMC 2 | in progress |
+| 10 Nonlinear control of manipulators (incl. Lyapunov, Cartesian-based, adaptive) | RMC 3 and RMC 4 | in progress |
+| 11 Force control of manipulators (hybrid position/force) | RMC 5 | in progress |
+| 12 Robot programming languages and systems | **MFoR 10 (planned)** | not started |
+| 13 Off-line programming systems | **MFoR 10 (planned)** | not started |
+
+Topics from *Modern Robotics* (Lynch & Park) that Craig lacks and that are also **planned**: kinematics of closed chains and
+parallel mechanisms (with MFoR 9), motion planning and collision avoidance (MFoR 11), and grasping.
+
+**Paused for lack of build capacity:** RMC 8 (sensing, implementation, visual servoing) and RMC 9 (underactuated and mobile systems).
+Their notebook plans below remain the intended content.
+
+**Prof. Nandi's lectures.** The lecture titles in [docs/VIDEO_INDEX.md](docs/VIDEO_INDEX.md) (lectures 1–25 of playlist 1) are covered by
+MFoR 1–4. The titles of lectures 4–5 and 26–29 of playlist 1, and of playlists 2 and 3, could not be read (YouTube is blocked in the
+build environment), so a **topic-by-topic audit against his playlists is still to be done** once the titles are available.
+
 ---
 
 ## Part A — MFoR: Mathematical Foundations of Robotics
