@@ -33,7 +33,10 @@ __all__ = ["MENAGERIE_SHA", "ROBOTS", "fetch", "load_robot", "frames_option", "d
 
 #: Commit of google-deepmind/mujoco_menagerie that every notebook is tested against.
 MENAGERIE_SHA = "98a70c569c4c1b6da467a20012f766ee1f8dc521"
-_RAW = "https://raw.githubusercontent.com/google-deepmind/mujoco_menagerie/{sha}/{path}"
+_RAW = "https://raw.githubusercontent.com/{repo}/{sha}/{path}"
+_MENAGERIE = "google-deepmind/mujoco_menagerie"
+#: A second, smaller source: the robosuite project (MIT licence) ships a MuJoCo model of the Rethink Baxter.
+ROBOSUITE_TAG = "v1.5.2"
 
 #: Robots used in the notebooks. ``scene`` is the XML to load (it includes the robot plus a floor and light).
 ROBOTS = {
@@ -47,6 +50,10 @@ ROBOTS = {
                    dof=7, maker="KUKA", licence="see model LICENSE"),
     "sawyer": dict(robot="sawyer.xml", dir="rethink_robotics_sawyer", scene="scene.xml", title="Rethink Robotics Sawyer",
                    dof=7, maker="Rethink Robotics", licence="see model LICENSE"),
+    "baxter": dict(robot="robot.xml", dir="robosuite/models/assets/robots/baxter", scene=None,
+                   repo="ARISE-Initiative/robosuite", sha=ROBOSUITE_TAG, licence_file="LICENSE",
+                   title="Rethink Robotics Baxter (dual-arm)", dof=14, maker="Rethink Robotics",
+                   licence="MIT (robosuite model files); original design by Rethink Robotics"),
     "op3": dict(robot="op3.xml", dir="robotis_op3", scene="scene.xml", title="ROBOTIS OP3 humanoid",
                 dof=20, maker="ROBOTIS", licence="see model LICENSE"),
 }
@@ -65,9 +72,9 @@ def _ssl_context():
     return ssl.create_default_context()
 
 
-def _download(path: str, dest: Path) -> bool:
-    """Download one file of the pinned Menagerie commit; return False on HTTP 404."""
-    url = _RAW.format(sha=MENAGERIE_SHA, path=path)
+def _download(path: str, dest: Path, repo: str = _MENAGERIE, sha: str = MENAGERIE_SHA) -> bool:
+    """Download one file of a pinned commit/tag; return False on HTTP 404."""
+    url = _RAW.format(repo=repo, sha=sha, path=path)
     dest.parent.mkdir(parents=True, exist_ok=True)
     try:
         with urllib.request.urlopen(url, timeout=60, context=_ssl_context()) as r:
@@ -109,37 +116,42 @@ def _referenced_files(xml_path: Path):
 
 
 def fetch(name: str, verbose: bool = True) -> Path:
-    """Make sure the Menagerie model ``name`` (a key of :data:`ROBOTS`) is on disk; return its directory."""
+    """Make sure the model ``name`` (a key of :data:`ROBOTS`) is on disk; return its directory."""
     spec = ROBOTS[name]
+    repo, sha = spec.get("repo", _MENAGERIE), spec.get("sha", MENAGERIE_SHA)
     local = os.environ.get("MUJOCO_MENAGERIE_PATH")
-    if local and (Path(local) / spec["dir"] / spec["scene"]).exists():
+    if repo == _MENAGERIE and local and (Path(local) / spec["dir"] / spec["scene"]).exists():
         return Path(local) / spec["dir"]
 
-    root = cache_dir() / f"menagerie-{MENAGERIE_SHA[:8]}"
+    root = cache_dir() / (f"menagerie-{sha[:8]}" if repo == _MENAGERIE else f"{repo.split(chr(47))[-1]}-{sha[:8]}")
     model_dir = root / spec["dir"]
     marker = model_dir / ".complete"
     if marker.exists():
         return model_dir
 
     if verbose:
-        print(f"Downloading {spec['title']} from MuJoCo Menagerie ({MENAGERIE_SHA[:8]}) ...", file=sys.stderr)
-    todo, done = [model_dir / spec["scene"]], set()
-    for extra in ("LICENSE", "README.md"):
-        _download(f"{spec['dir']}/{extra}", model_dir / extra)
+        print(f"Downloading {spec['title']} from {repo} ({sha[:8]}) ...", file=sys.stderr)
+    start = spec["scene"] or spec["robot"]
+    todo, done = [model_dir / start], set()
+    licence = spec.get("licence_file", "LICENSE")
+    for extra, dest in ((f"{spec['dir']}/LICENSE", model_dir / "LICENSE"), (licence, model_dir / "LICENSE"),
+                        (f"{spec['dir']}/README.md", model_dir / "README.md")):
+        if not dest.exists():
+            _download(extra, dest, repo, sha)
     while todo:
         p = todo.pop()
         if p in done:
             continue
         done.add(p)
         rel = p.relative_to(root).as_posix()
-        if not p.exists() and not _download(rel, p):
-            raise FileNotFoundError(f"{rel} not found in Menagerie commit {MENAGERIE_SHA[:8]}")
+        if not p.exists() and not _download(rel, p, repo, sha):
+            raise FileNotFoundError(f"{rel} not found in {repo}@{sha[:8]}")
         if p.suffix.lower() == ".xml":
             for q, kind in _referenced_files(p):
                 q = Path(os.path.normpath(q))
                 if q not in done:
                     todo.append(q)
-    marker.write_text(MENAGERIE_SHA + "\n")
+    marker.write_text(f"{repo}@{sha}\n")
     return model_dir
 
 
@@ -155,7 +167,7 @@ def load_robot(name: str, scene: str = "light", frames: bool = False):
 
     d = fetch(name)
     spec = ROBOTS[name]
-    if scene == "menagerie":
+    if scene == "menagerie" and spec["scene"]:
         xml = d / spec["scene"]
     elif scene == "bare":
         xml = d / spec["robot"]
@@ -193,5 +205,7 @@ def frames_option(model, length: float = 0.10, width: float = 0.006, kind: str =
 def describe(name: str) -> str:
     """One-line attribution string for figure captions and README tables."""
     s = ROBOTS[name]
-    return (f"{s['title']} — model from [MuJoCo Menagerie](https://github.com/google-deepmind/"
-            f"mujoco_menagerie/tree/{MENAGERIE_SHA[:8]}/{s['dir']}) ({s['maker']}; licence: {s['licence']})")
+    repo, sha = s.get("repo", _MENAGERIE), s.get("sha", MENAGERIE_SHA)
+    src = "MuJoCo Menagerie" if repo == _MENAGERIE else repo.split("/")[-1]
+    return (f"{s['title']} — model from [{src}](https://github.com/{repo}/tree/{sha[:8] if repo == _MENAGERIE else sha}/"
+            f"{s['dir']}) ({s['maker']}; licence: {s['licence']})")
