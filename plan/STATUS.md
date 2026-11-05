@@ -5,7 +5,7 @@ to save usage):
 
 | Chapter | Notebooks that exist | Left to do |
 |:--|:--|:--|
-| MFoR 1 Introduction, DOF | 1.1 | 1.2 (tour of real robots), 1.3, 1.4, README |
+| **MFoR 1 Introduction, DOF** | 1.1–1.5 + README (**done, passes checker**) | — |
 | **MFoR 2 Spatial descriptions** | 2.1–2.5 + README (**done, passes checker**) | 2.6 screw theory, 2.7 practice problems |
 | MFoR 3 Forward kinematics | 3.1 (passes) | 3.2–3.5, README; modules `dh_tools`, `dh_plot`, `poe` exist |
 | MFoR 4 Inverse kinematics | 4.1 | 4.2–4.6, README; module `ik` exists |

@@ -35,7 +35,7 @@ Craig's *Introduction to Robotics* (3rd ed.) has thirteen chapters. This table s
 
 | Craig chapter | Where in this repository | Status |
 |:--|:--|:--|
-| 1 Introduction | MFoR 1 | in progress |
+| 1 Introduction | MFoR 1 | ✅ done |
 | 2 Spatial descriptions and transformations | MFoR 2 | in progress (2.1–2.3 done) |
 | 3 Manipulator kinematics | MFoR 3 | in progress |
 | 4 Inverse manipulator kinematics | MFoR 4 | in progress |
@@ -93,14 +93,15 @@ Section titles are those of Craig's 3rd edition as recorded in the research note
 
 ## Part A — MFoR: Mathematical Foundations of Robotics
 
-### Chapter 1 — Introduction, Joints and Degrees of Freedom ⬜
+### Chapter 1 — Introduction, Joints and Degrees of Freedom ✅
 Folder `MFoR/01-introduction-and-degrees-of-freedom/`
 | Notebook | Topics |
 |:--|:--|
-| 1.1 Robots, links and joints | manipulator anatomy; serial vs closed chains; the six lower pairs; naming robots (RRR, SCARA, …); classification: articulated, spherical, cylindrical, Cartesian, parallel; tour of real robot models |
-| 1.2 Degrees of freedom | DOF of a rigid body (plane, space); Grübler–Kutzbach formula; four-bar, slider–crank, Stewart platform; redundancy |
-| 1.3 Configuration space | explicit vs implicit representation; topology (circle, torus, SO(3)); holonomic and non-holonomic constraints |
-| 1.4 Spaces of a robot | joint, actuator, Cartesian/task space; workspace, reachable vs dexterous; the FK/IK maps |
+| 1.1 Robots, links and joints ✅ | manipulator anatomy; serial, tree and closed chains; the six lower pairs built in MuJoCo; classical arm geometries |
+| 1.2 A tour of real robots ✅ | joint census of the Dynamixel 2R, UR5e, Panda, iiwa 14, Sawyer, Baxter and OP3 read from the simulator models |
+| 1.3 Degrees of freedom and Grübler's formula ✅ | rigid-body DOF; Grübler–Kutzbach; four-bar, slider–crank, Stewart platform; paradoxes (coupling rods, Bennett linkage, Delta) |
+| 1.4 Configuration space ✅ | explicit vs implicit representation; torus, SO(3); the four-bar's C-space; holonomic and non-holonomic constraints (parallel parking) |
+| 1.5 Spaces of a robot and its workspace ✅ | joint, actuator, task space; reachable vs dexterous workspace; 2R annulus proof; sampling the real 2R and UR5e; redundancy |
 
 ### Chapter 2 — Spatial Descriptions and Transformations 🚧
 Folder `MFoR/02-spatial-descriptions-and-transformations/`

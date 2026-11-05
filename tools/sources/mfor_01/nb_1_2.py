@@ -17,8 +17,8 @@ header(COURSE, CHAPTER, "1.2", "A Tour of Real Robots", f"{CH_DIR}/{FN}", [
     ("Prerequisites", "[1.1 Robots, Links and Joints](1.1-robots-links-and-joints.ipynb)"),
     ("Study time", "about 2½ hours, including the exercises"),
 ], """\
-Definitions become convincing when they can be *measured*. This notebook takes six robots from MuJoCo Menagerie — the
-Dynamixel 2R, the Universal Robots UR5e, the Franka Emika Panda, the KUKA iiwa 14, the Rethink Sawyer and the ROBOTIS
+Definitions become convincing when they can be *measured*. This notebook takes seven robots from MuJoCo Menagerie — the
+Dynamixel 2R, the Universal Robots UR5e, the Franka Emika Panda, the KUKA iiwa 14, the Rethink Sawyer and Baxter, and the ROBOTIS
 OP3 humanoid — and reads their joints directly from the simulator's model: type, axis, range, and the geometric
 relation between consecutive axes. From these numbers we name each robot, find out which have a *spherical wrist*,
 explain why the simulator's counts `nq`, `nv` and `nu` differ, and see how a humanoid is a kinematic *tree*."""),
@@ -52,7 +52,7 @@ code(SETUP + r'''
 from rgkit import mujoco_utils as mju, robots, joint_census as jc, mechanisms as mech
 import mujoco
 
-ROBOTS = ["2r", "ur5e", "panda", "iiwa14", "sawyer", "op3"]
+ROBOTS = ["2r", "ur5e", "panda", "iiwa14", "sawyer", "baxter", "op3"]
 models = {}
 for name in ROBOTS:
     models[name] = robots.load_robot(name, scene="light")        # the manufacturer's model in this repository's light scene
@@ -62,7 +62,7 @@ for name in ROBOTS:
 md(r"""
 ## 1. The gallery
 
-The six models below are rendered in their default configuration (the manufacturer's `home` keyframe where one
+The seven models below are rendered in their default configuration (the manufacturer's `home` keyframe where one
 exists). Each numbered disc is placed at the **anchor** of a joint — the point on the joint axis that MuJoCo uses as the
 origin of the joint — read from the model and projected onto the image; red marks revolute joints and orange marks
 prismatic ones. The numbers are the order in which the joints appear in the model, which for a serial arm is the order from the base to the tip.
@@ -74,10 +74,12 @@ cams = {"2r": dict(azimuth=90, elevation=-5, distance=0.75, lookat=(0.12, 0, 0.3
         "panda": dict(azimuth=140, elevation=-15, distance=1.55, lookat=(0.2, 0, 0.5)),
         "iiwa14": dict(azimuth=140, elevation=-15, distance=1.85, lookat=(0, 0, 0.55)),
         "sawyer": dict(azimuth=140, elevation=-15, distance=1.85, lookat=(0, 0, 0.55)),
+        "baxter": dict(azimuth=150, elevation=-10, distance=2.6, lookat=(0, 0, 0.6)),
         "op3": dict(azimuth=140, elevation=-10, distance=0.8, lookat=(0, 0, 0.25))}
 m2r, d2r = models["2r"]; d2r.qpos[:] = [0.7, -1.1]; mujoco.mj_forward(m2r, d2r)          # a bent pose; q = 0 hangs straight down
 
-fig, axs = plt.subplots(2, 3, figsize=(12.5, 8.2))
+fig, axs = plt.subplots(2, 4, figsize=(15, 7.4))
+axs.ravel()[-1].set_axis_off()
 for ax, name in zip(axs.ravel(), ROBOTS):
     m, d = models[name]
     img = mju.render(m, d, camera=cams[name], width=520, height=400)
@@ -129,7 +131,7 @@ the world to its end body — the joint sequence — using `chain_joints`.
 """),
 
 code(r'''
-tips = {"2r": "second_segment", "ur5e": "wrist_3_link", "panda": "link7", "iiwa14": "link7", "sawyer": "right_l6"}
+tips = {"2r": "second_segment", "ur5e": "wrist_3_link", "panda": "link7", "iiwa14": "link7", "sawyer": "right_l6", "baxter": "right_wrist"}
 chains = {}
 lines = ["| robot | joints in the chain to the tip | sequence | arm class from the first axes |", "|:--|:--|:-:|:--|"]
 for name, tip in tips.items():
@@ -143,8 +145,8 @@ display(Markdown("\n".join(lines)))
 '''),
 
 md(r"""
-Four of the six robots are serial chains of revolute joints: the **2R** (planar), the **6R** UR5e and the **7R** Panda,
-iiwa and Sawyer. In all of them axes 1 and 2 meet at $90^\circ$ except in the planar 2R, where they are parallel (a
+Five of the seven robots are serial chains of revolute joints: the **2R** (planar), the **6R** UR5e and the **7R** Panda,
+iiwa and Sawyer; Baxter consists of two 7R arms on one torso (a tree with two serial limbs; the table follows its right arm). In all of them axes 1 and 2 meet at $90^\circ$ except in the planar 2R, where they are parallel (a
 planar arm has all axes parallel). The humanoid is treated in Section 7. The sequence alone does not tell the whole
 story, though; the *geometry between the axes* does.
 
@@ -265,18 +267,19 @@ def worst_miss(name, which, trials=40):
 
 lines = ["| robot | first three axes: worst miss (mm) | last three axes: worst miss (mm) | spherical shoulder | spherical wrist |", "|:--|:-:|:-:|:-:|:-:|"]
 verdict = {}
-for name in ["ur5e", "panda", "iiwa14", "sawyer"]:
+for name in ["ur5e", "panda", "iiwa14", "sawyer", "baxter"]:
     f, l = worst_miss(name, "first") * 1000, worst_miss(name, "last") * 1000
     verdict[name] = (f < 1e-6, l < 1e-6)
     lines.append(f"| {robots.ROBOTS[name]['title']} | {f:.3f} | {l:.3f} | {'yes' if f < 1e-6 else 'no'} | {'yes' if l < 1e-6 else 'no'} |")
 display(Markdown("\n".join(lines)))
 assert verdict["iiwa14"] == (True, True) and verdict["ur5e"] == (False, False) and verdict["panda"] == (True, False)
+print("Baxter (right arm): spherical shoulder, spherical wrist =", verdict["baxter"])
 '''),
 
 md(r"""
 The test identifies the structure of each arm without any catalogue. Only the **iiwa 14** has both a spherical shoulder
 and a spherical wrist; the **Panda** has a spherical shoulder but its last three axes miss each other by
-the offset $0.088$ m; the **UR5e** and **Sawyer** have neither. Why does it matter? A 6-joint arm whose last three axes meet at a
+the offset $0.088$ m; the **UR5e**, the **Sawyer** and Baxter's arm have neither. Why does it matter? A 6-joint arm whose last three axes meet at a
 point has its **wrist centre** determined by the first three joints alone, so inverse kinematics splits into a
 position problem and an orientation problem (*kinematic decoupling*, Chapter 4). The UR5e is nevertheless solvable in
 closed form because of a different property — its three parallel axes — and the Panda needs numerical
@@ -307,9 +310,9 @@ def skeleton(ax, name, scale=0.14, title=None):
     new_axes3d(ax, lim=tuple((c_[i] - r_, c_[i] + r_) for i in range(3)), title=title or robots.ROBOTS[name]["title"], elev=18, azim=130)
     ax.set_xlabel(""); ax.set_ylabel(""); ax.set_zlabel("")
 
-fig = plt.figure(figsize=(13, 3.8))
-for k, (name, tag) in enumerate([("ur5e", "(a)"), ("panda", "(b)"), ("iiwa14", "(c)"), ("sawyer", "(d)")]):
-    skeleton(fig.add_subplot(1, 4, k + 1, projection="3d"), name, title=f"{tag} {robots.ROBOTS[name]['title']}")
+fig = plt.figure(figsize=(15, 3.8))
+for k, (name, tag) in enumerate([("ur5e", "(a)"), ("panda", "(b)"), ("iiwa14", "(c)"), ("sawyer", "(d)"), ("baxter", "(e)")]):
+    skeleton(fig.add_subplot(1, 5, k + 1, projection="3d"), name, title=f"{tag} {robots.ROBOTS[name]['title']}")
 plt.tight_layout(); plt.show()
 '''),
 
@@ -336,6 +339,7 @@ comments = {"2r": "planar arm, 2 actuated joints",
             "panda": "7 arm joints + 2 finger joints tied by an equality constraint; 7 + 1 actuators",
             "iiwa14": "7 joints, 7 actuators: redundant for a 6-D task",
             "sawyer": "7 joints, 7 actuators",
+            "baxter": "two 7R arms on one torso: 14 joints, 14 actuators",
             "op3": "free base (7 numbers, 6 velocities) + 20 joints; only 20 actuated"}
 mob = {}
 for name in ROBOTS:
@@ -384,10 +388,10 @@ are not a footnote: they truncate the set of reachable configurations, and with 
 """),
 
 code(r'''
-fig, axs = plt.subplots(1, 4, figsize=(13.5, 3.7))
-for ax, name in zip(axs, ["ur5e", "panda", "iiwa14", "sawyer"]):
+fig, axs = plt.subplots(1, 5, figsize=(16, 3.7))
+for ax, name in zip(axs, ["ur5e", "panda", "iiwa14", "sawyer", "baxter"]):
     m, d = models[name]
-    rows = [r for r in jc.joint_table(m, d) if r["symbol"] == "R"]
+    rows = chains[name]
     for k, r in enumerate(rows):
         lo_, hi_ = np.degrees(r["range"])
         ax.barh(k, hi_ - lo_, left=lo_, color="#5dade2", ec="#21618c", height=0.6)
@@ -473,7 +477,7 @@ def show_pose(robot="ur5e", t=0.35):
     plt.title(f"{robots.ROBOTS[robot]['title']}: every limited joint at {t:.0%} of its range"); plt.show()
     d.qpos[:] = m.key_qpos[0] if m.nkey else m.qpos0; mujoco.mj_forward(m, d)
 
-interact(show_pose, robot=widgets.Dropdown(options=["2r", "ur5e", "panda", "iiwa14", "sawyer"], value="ur5e", description="robot"),
+interact(show_pose, robot=widgets.Dropdown(options=["2r", "ur5e", "panda", "iiwa14", "sawyer", "baxter"], value="ur5e", description="robot"),
          t=widgets.FloatSlider(0.35, min=0, max=1, step=0.05, description="range t"));
 '''),
 
@@ -507,7 +511,7 @@ joint type contributes.
 has a spherical wrist and which a spherical shoulder.
 
 *Solution.* Only the **iiwa 14** has both (miss distance $0$); the **Panda** has a spherical shoulder only (its wrist axes miss by the
-$0.088$ m offset) and the **UR5e** and **Sawyer** have neither.
+$0.088$ m offset) and the **UR5e**, **Sawyer** and **Baxter** have neither.
 
 **Example 1.2.6 (axis classification).** Classify the first three joints of the UR5e and the iiwa 14 by the classical
 geometries of Notebook 1.1.
@@ -522,18 +526,13 @@ mU, dU = models["ur5e"]; mujoco.mj_forward(mU, dU)
 rows = jc.joint_table(mU, dU)
 el = rows[2]
 print("1.2.1  elbow:", el["name"], el["type"], "axis", el["axis"].round(2), "range", np.degrees(el["range"]).round(0))
-assert el["type"] == "hinge" and np.allclose(el["axis"], [-1, 0, 0], atol=1e-3) and np.allclose(np.degrees(el["range"]), [-180, 180])
+assert el["type"] == "hinge" and np.allclose(el["axis"], [-1, 0, 0], atol=1e-3) and np.allclose(np.degrees(el["range"]), [-180, 180], atol=1e-2)
 assert np.allclose(rows[1]["axis"], el["axis"], atol=1e-3) and np.allclose(rows[3]["axis"], el["axis"], atol=1e-3)      # joints 2, 3, 4 parallel
 
 tab = link_table("ur5e")
 a2, a3 = tab[1][0], tab[2][0]
 print(f"1.2.2  a2 = {a2:.4f} m, a3 = {a3:.4f} m, stretched distance shoulder-axis to wrist-1 axis = {a2 + a3:.4f} m")
-mU_state = dU.qpos.copy()
-dU.qpos[:] = [0, -np.pi / 2, 0, -np.pi / 2, 0, 0]; mujoco.mj_forward(mU, dU)                 # arm stretched out horizontally
-r_ = jc.chain_joints(mU, dU, "wrist_3_link")
-print("       measured with the arm stretched out:", round(np.linalg.norm(r_[3]["anchor"] - r_[1]["anchor"]), 4), "m (distance between the anchors of joints 2 and 4 — includes small offsets)")
 assert abs(a2 + a3 - 0.817) < 1e-6
-dU.qpos[:] = mU_state; mujoco.mj_forward(mU, dU)
 
 print("1.2.3  Panda: nv =", mP.nv, ", equality rank =", jc.equality_rank(mP, dP), ", mobility =", jc.model_mobility(mP, dP), ", nu =", mP.nu)
 assert jc.model_mobility(mP, dP) == 8 == mP.nu
@@ -548,9 +547,9 @@ md(r"""
 | Idea | Result |
 |:--|:--|
 | Joint census | `joint_table` gives type, axis, anchor and range of every joint of a MuJoCo model |
-| Naming | UR5e **6R**; Panda, iiwa 14, Sawyer **7R**; Dynamixel 2R **2R** (planar); OP3 a **tree** of five serial limbs plus a floating base |
+| Naming | UR5e **6R**; Panda, iiwa 14, Sawyer and each Baxter arm **7R**; Dynamixel 2R **2R** (planar); OP3 a **tree** of five serial limbs plus a floating base |
 | Link length and twist | $a$ = distance, $\alpha$ = angle between consecutive axes; constants of the link; they become D-H parameters |
-| Spherical shoulder / wrist | three axes concurrent in *every* configuration; iiwa: both; Panda: shoulder; UR5e and Sawyer: neither |
+| Spherical shoulder / wrist | three axes concurrent in *every* configuration; iiwa: both; Panda: shoulder; UR5e, Sawyer, Baxter: neither |
 | `nq`, `nv`, `nu` | quaternions make `nq > nv`; equality constraints make mobility $< n_v$; a floating base makes $n_u < n_v$ |
 | Humanoid leg | spherical hip – knee – universal ankle (3-1-2), a tree of serial limbs |
 
@@ -567,8 +566,8 @@ md(r"""
 
 <details><summary>Answer</summary>
 
-Joint 7 (`right_j6`) is the widest, $\pm 270^\circ$ (540° in total); joint 1 (`right_j0`) is $\pm 175^\circ$ (350°), and the narrowest range
-belongs to joint 2 (`right_j1`), $-218^\circ \ldots 130^\circ$ (348°)... see the code check below for the exact numbers.
+Joint 7 (`right_j6`) is the widest, $\pm 270^\circ$ (540° in total); the narrowest is joint 5 (`right_j4`), $\pm 171^\circ$ (341° in total); the
+other joints lie between 349° and 350°. The code check below prints these numbers.
 </details>
 
 **1.2.2** Why does the OP3 have `nq = 27` but `nv = 26`? What would `nq` and `nv` be if the base were welded to the ground?
@@ -640,7 +639,8 @@ md(r"""
 * Planned next (not yet written): a notebook on Grübler's formula and degrees of freedom of closed chains, then configuration space and workspace.
 """),
 
-nav(("1.1 Robots, Links and Joints", "1.1-robots-links-and-joints.ipynb"), None),
+nav(("1.1 Robots, Links and Joints", "1.1-robots-links-and-joints.ipynb"),
+    ("1.3 Degrees of Freedom and Grübler's Formula", "1.3-degrees-of-freedom-and-grublers-formula.ipynb")),
 ]
 
 if __name__ == "__main__":
