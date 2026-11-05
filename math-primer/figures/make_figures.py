@@ -134,19 +134,19 @@ def fig_m1_cross_product():
     ax.add_collection3d(Poly3DCollection([poly[:4]], facecolor="#cfd8e3", alpha=0.6, edgecolor="none"))
     for vec, col, lab, off in [
         (a, SERIES[0], r"$\mathbf{a}$", (0.05, -0.12, 0.0)),
-        (b, SERIES[1], r"$\mathbf{b}$", (-0.05, 0.08, 0.02)),
-        (c, SERIES[2], r"$\mathbf{a}\times\mathbf{b}$", (0.06, 0.0, 0.06)),
+        (b, SERIES[1], r"$\mathbf{b}$", (0.1, -0.08, -0.08)),
+        (c, SERIES[2], r"$\mathbf{a}\times\mathbf{b}$", (-0.32, 0.0, -0.05)),
     ]:
         ax.add_artist(Arrow3D((0, 0, 0), vec, arrowstyle="-|>", color=col, lw=2.2, mutation_scale=14))
         ax.text(*(vec + np.array(off)), lab, color=INK, fontsize=12)
     # reference axes
-    for vec, col, lab in [((1.3, 0, 0), X_RED, "x"), ((0, 1.3, 0), Y_GREEN, "y"), ((0, 0, 1.2), Z_BLUE, "z")]:
+    for vec, col, lab in [((1.3, 0, 0), X_RED, "x"), ((0, 1.45, 0), Y_GREEN, "y"), ((0, 0, 1.2), Z_BLUE, "z")]:
         ax.add_artist(Arrow3D((0, 0, 0), vec, arrowstyle="-|>", color=col, lw=1.0, mutation_scale=10, alpha=0.8))
         ax.text(*(np.array(vec) * 1.06), lab, color=col, fontsize=10)
     mid = (a + b) / 2
-    ax.text(mid[0] - 0.05, mid[1] - 0.05, mid[2], "area = |a×b|", color=MUTED, fontsize=9)
+    ax.text(mid[0] + 0.12, mid[1] + 0.02, mid[2], "area = |a×b|", color=MUTED, fontsize=9)
     ax.set_xlim(-0.4, 1.3)
-    ax.set_ylim(-0.2, 1.3)
+    ax.set_ylim(-0.2, 1.45)
     ax.set_zlim(0, 1.2)
     ax.view_init(elev=20, azim=-62)
     ax.set_axis_off()
@@ -307,7 +307,7 @@ def fig_m6_step_responses():
     ax.set_ylabel("y(t)")
     ax.set_title("unit-step response", fontsize=10, color=INK)
     ax.legend(loc="lower right", fontsize=8.5)
-    ax.text(10.5, 1.06, "±2% band", color=MUTED, fontsize=8)
+    ax.text(17.0, 1.08, "±2% band", color=MUTED, fontsize=8)
     fig.tight_layout()
     save(fig, "m6_step_responses.png")
 
