@@ -81,7 +81,7 @@ def check(path: Path):
 
 
 def main(argv):
-    paths = [Path(a) for a in argv] or sorted(list((ROOT / "MFoR").rglob("*.ipynb")) + list((ROOT / "RMC").rglob("*.ipynb")))
+    paths = [Path(a).resolve() for a in argv] or sorted(list((ROOT / "MFoR").rglob("*.ipynb")) + list((ROOT / "RMC").rglob("*.ipynb")))
     failed = 0
     for p in paths:
         e, w, kb = check(p)
